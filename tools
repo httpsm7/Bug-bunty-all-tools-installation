@@ -1,0 +1,54 @@
+sudo apt update -y && sudo apt upgrade -y
+
+# Basic deps
+sudo apt install -y git curl wget unzip jq python3-pip build-essential
+
+# Go (required for most tools)
+sudo apt install -y golang-go
+echo 'export GOPATH=$HOME/go' >> ~/.bashrc
+echo 'export PATH=$PATH:$GOPATH/bin' >> ~/.bashrc
+source ~/.bashrc
+
+# Recon tools
+go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
+go install github.com/OWASP/Amass/v3/...@master
+go install github.com/tomnomnom/assetfinder@latest
+go install github.com/Findomain/Findomain@latest
+go install github.com/projectdiscovery/chaos-client/cmd/chaos@latest
+
+# HTTP / probing
+go install github.com/projectdiscovery/httpx/cmd/httpx@latest
+go install github.com/tomnomnom/httprobe@latest
+sudo apt install -y whatweb
+go install github.com/sensepost/gowitness@latest
+
+# URLs & crawling
+go install github.com/tomnomnom/waybackurls@latest
+go install github.com/lc/gau/v2/cmd/gau@latest
+go install github.com/projectdiscovery/katana/cmd/katana@latest
+git clone https://github.com/devanshbatham/ParamSpider.git ~/tools/paramspider
+pip3 install -r ~/tools/paramspider/requirements.txt
+pip3 install arjun
+
+# Vuln scanning
+go install github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest
+nuclei -update-templates
+go install github.com/hahwul/dalfox/v2@latest
+go install github.com/Emoe/kxss@latest
+go install github.com/tomnomnom/qsreplace@latest
+go install github.com/ffuf/ffuf@latest
+
+# JS & secrets
+go install github.com/lc/subjs@latest
+git clone https://github.com/GerbenJavado/LinkFinder.git ~/tools/linkfinder
+pip3 install -r ~/tools/linkfinder/requirements.txt
+git clone https://github.com/m4ll0k/SecretFinder.git ~/tools/secretfinder
+pip3 install -r ~/tools/secretfinder/requirements.txt
+go install github.com/MrEmpy/mantra@latest
+
+# Helpers
+go install github.com/tomnomnom/anew@latest
+go install github.com/tomnomnom/unfurl@latest
+go install github.com/tomnomnom/gf@latest
+
+echo "✅ Bug Bounty tools installation completed"
